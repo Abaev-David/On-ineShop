@@ -1,0 +1,5 @@
+body {
+    background-image: url('/static/img/img.jpg'); /* Укажите путь к вашему изображению */
+    background-repeat: no-repeat; /* Чтобы изображение не повторялось */
+    background-size: cover; /* Чтобы изображение заполняло весь фон */
+}
