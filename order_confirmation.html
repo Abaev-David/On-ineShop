@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Заказ подтвержден</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Магазин</a>
+    </nav>
+    <div class="container mt-4">
+        <h2>Заказ оформлен!</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Чек</h5>
+                <p class="card-text"><strong>Товар:</strong> {{ product_name }}</p>
+                <p class="card-text"><strong>Цена:</strong> {{ product_price }}</p>
+                <p class="card-text"><strong>Номер карты:</strong> {{ card_number }} <span class="text-muted">(ДЕНЬГИ НЕ СПИСЫВАЮТСЯ - ТЕСТ)</span></p>
+                <p class="card-text"><strong>Адрес:</strong> {{ address }}</p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Вернуться на главную</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
