@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }} - Магазин</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='img/' + product.name + '_img.jpg') }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Магазин</a>
+        </nav>
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p>Цена: {{ product.price }}</p>
+        <form action="{{ url_for('checkout', product_id=product.id) }}">
+            <button type="submit" class="btn btn-success">Купить</button>
+        </form>
+
+        <hr>
+
+        <h2>Комментарии</h2>
+        {% if current_user.is_authenticated %}
+            <form method="POST" action="{{ url_for('add_comment', product_id=product.id) }}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="comment">Оставить комментарий:</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Добавить изображение (необязательно):</label>
+                    <input type="file" class="form-control-file" id="image" name="image">
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+            <hr>
+        {% else %}
+            <p><a href="{{ url_for('login') }}">Войдите</a>, чтобы оставить комментарий.</p>
+            <hr>
+        {% endif %}
+
+        {% if comments %}
+            <h2>Комментарии</h2>
+            {% for comment in comments %}
+                <div class="media mb-3">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ comment.author.username }}</h5>
+                        <p>{{ comment.text }}</p>
+                        {% if comment.image_filename %}
+                            <img src="{{ url_for('static', filename='comment_images/' + comment.image_filename) }}" alt="Изображение к комментарию" class="img-thumbnail" style="max-width: 200px;">
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Пока нет комментариев к этому товару.</p>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
